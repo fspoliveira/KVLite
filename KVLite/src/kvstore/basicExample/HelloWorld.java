@@ -7,90 +7,44 @@ import oracle.kv.ValueVersion;
 
 import java.util.ArrayList;
 
-
 public class HelloWorld {
 
-	
-	static List<String> majorComponents = new ArrayList<String>();
-	static List<String> minorComponents = new ArrayList<String>();
-	static KVStore kvstore =  new KVStore();
-		
-	public static void main(String args[])
-	{
-	
-		
+	private static List<String> majorComponents = new ArrayList<String>();
+	private static List<String> minorComponents = new ArrayList<String>();
+	private static KVStore kvstore = new KVStore();
+
+	public static void main(String args[]) {
+
 		HelloWorld h = new HelloWorld();
-		h.addFone();
-		h.addEndereco();
-		
-		
+		majorComponents.add("Oliveira");
+		majorComponents.add("Fenando");
+
+		minorComponents.add("phonenumber");
+		Key myKey = Key.createKey(majorComponents, minorComponents);
+		h.addValue(myKey, "2364 7979");
+		h.getValue(myKey);
+
+		minorComponents.add("endereco");
+		myKey = Key.createKey(majorComponents, minorComponents);
+		h.addValue(myKey, "Antonieta Leitao");
+		h.getValue(myKey);
+
+	}
+
+	public void addValue(Key key, String data) {
+
+		Value myValue = Value.createValue(data.getBytes());		
+		kvstore.put(key, myValue);
 	}
 	
-	
-    public void addFone(){
-    	
-    	// Define the major and minor path components for the key
-    			majorComponents.add("Smith");
-    			majorComponents.add("Bob");		
-    			minorComponents.add("phonenumber");
-    			
-    			// Create the key
-    			Key myKey = Key.createKey(majorComponents, minorComponents);
-    			
-    			String data = "408 555 5555";
-    		
-    			
-    			// Create the value. Notice that we serialize the contents of the
-    			// String object when we create the value.
-    			
-    			Value myValue = Value.createValue(data.getBytes());
-    			
-    			// Now put the record. Note that we do not show the creation of the
-    			// kvstore handle here.
-    			kvstore.put(myKey, myValue);
-    		  
-    			
-    			ValueVersion vv = kvstore.get(myKey);
-    			Value v = vv.getValue();
-    			String dados = new String(v.getValue());
-    		
-    			System.out.println(dados.toString());
-    			
-    	
-    }
-    
-    public void addEndereco(){
-    	// Define the major and minor path components for the key
-		majorComponents.add("Smith");
-		majorComponents.add("Bob");		
-		minorComponents.add("endereco");
-		
-		// Create the key
-		Key myKey = Key.createKey(majorComponents, minorComponents);
-		
-		String data = "CampoRedondo";
-	
-		
-		// Create the value. Notice that we serialize the contents of the
-		// String object when we create the value.
-		
-		Value myValue = Value.createValue(data.getBytes());
-		
-		// Now put the record. Note that we do not show the creation of the
-		// kvstore handle here.
-		kvstore.put(myKey, myValue);
-	  
-		
-		ValueVersion vv = kvstore.get(myKey);
-		Value v = vv.getValue();
+	public void getValue(Key key){
+
+		ValueVersion vv = kvstore.get(key);
+		Value v = vv.getValue();		
 		String dados = new String(v.getValue());
-	
 		System.out.println(dados.toString());
 		
-    	
-    }
-    
 
-
+	}
 
 }

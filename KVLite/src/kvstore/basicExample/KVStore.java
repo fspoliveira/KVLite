@@ -21,7 +21,7 @@ public class KVStore {
 
 	public ValueVersion get(Key myKey) {
 		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+		
 		String[] hhosts = {"localhost:5000"};
 		KVStoreConfig kconfig = new KVStoreConfig("kvstore", hhosts);
 		oracle.kv.KVStore kvstore = KVStoreFactory.getStore(kconfig);
