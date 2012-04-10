@@ -16,6 +16,7 @@ public class KVStore {
 		KVStoreConfig kconfig = new KVStoreConfig("kvstore", hhosts);
 		oracle.kv.KVStore kvstore = KVStoreFactory.getStore(kconfig);
 		kvstore.put(myKey, myValue);
+		
 	}
 
 	public ValueVersion get(Key myKey) {
